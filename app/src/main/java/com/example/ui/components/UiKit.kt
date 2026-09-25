@@ -10,6 +10,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.spring
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
@@ -55,7 +56,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.Stroke
-import androidx.compose.ui.graphics.drawscope.drawOutline
 import androidx.compose.ui.zIndex
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
@@ -179,13 +179,11 @@ fun Modifier.pressScale(
             scaleX = scale
             scaleY = scale
         }
-        .drawWithContent {
-            drawContent()
+        .then(
             if (ring > 0.01f) {
-                val outline = shape.createOutline(size, layoutDirection, this)
-                drawOutline(outline, color = Color.White, alpha = ring, style = Stroke(width = 2.5.dp.toPx()))
-            }
-        }
+                Modifier.border(BorderStroke(2.5.dp, Color.White.copy(alpha = ring)), shape)
+            } else Modifier
+        )
         .then(clickModifier)
 }
 
