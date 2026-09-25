@@ -8,8 +8,6 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusGroup
@@ -54,6 +52,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.draw.drawWithContent
@@ -154,14 +153,19 @@ fun Modifier.tvFocusRing(
     val amount by animateFloatAsState(if (focused) 1f else 0f, tween(130), label = "tvFocusRing")
     this
         .onFocusChanged { focused = it.hasFocus }
-        .then(
+        .drawWithContent {
+            drawContent()
             if (amount > 0.01f) {
-                Modifier.border(
-                    BorderStroke(width, Color.White.copy(alpha = amount)),
-                    shape
+                val outline = shape.createOutline(size, layoutDirection, this)
+                drawOutline(outline, color = Color.White, alpha = 0.10f * amount)
+                drawOutline(
+                    outline,
+                    color = Color.White,
+                    alpha = amount,
+                    style = Stroke(width = width.toPx())
                 )
-            } else Modifier
-        )
+            }
+        }
 }
 
 // ---------------------------------------------------------------------------

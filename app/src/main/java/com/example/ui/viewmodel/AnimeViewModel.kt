@@ -38,6 +38,13 @@ class AnimeViewModel(
 
     init {
         viewModelScope.launch {
+            repository.animeProviderRepository.cachedAnime.collect { cached ->
+                if (cached.isNotEmpty()) {
+                    _uiState.update { it.copy(isLoading = false, categorySections = listOf(AdminCategorySection("Cached", cached))) }
+                }
+            }
+        }
+        viewModelScope.launch {
             ServerConfig.currentServer.collect {
                 loadAnimeData()
             }
@@ -64,6 +71,9 @@ class AnimeViewModel(
                 val sections = rawSections.map { (name, items) ->
                     AdminCategorySection(categoryName = name, items = items)
                 }.filter { it.items.isNotEmpty() }
+                
+                // Cache the anime data
+                repository.animeProviderRepository.refreshAnimeCache(sections.flatMap { it.items })
 
                 val heroList = repository.getAnimeHeroBanners(5)
                 val hero = heroList.firstOrNull() ?: sections.firstOrNull()?.items?.firstOrNull()

@@ -45,7 +45,8 @@ class MainActivity : ComponentActivity() {
     val database = CineStreamDatabase.getDatabase(this)
     val mediaRepository = MediaRepository(
       database.watchItemDao(),
-      prefs = prefs
+      prefs = prefs,
+      animeProviderRepository = com.example.data.repository.AnimeProviderRepository(database.animeCacheDao())
     )
 
     // Android TV / Google TV / Fire TV (or "TV mode" forced from Profile for testing)

@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import java.io.File
+import com.example.data.repository.VidukiApi
+import com.example.data.repository.VidukiProvider
 
 data class PlayerUiState(
     val isLoading: Boolean = true,
@@ -55,7 +57,8 @@ data class PlayerUiState(
     /** Short toast-like info, e.g. "Source failed - trying 720p". */
     val notice: String? = null,
     /** Bumped on every manual retry so the same source is prepared again. */
-    val playbackAttempt: Int = 0
+    val playbackAttempt: Int = 0,
+    val currentVidukiApi: VidukiApi = VidukiApi.API_1
 )
 
 class PlayerViewModel(

@@ -6,8 +6,8 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [WatchItemEntity::class, DownloadEntity::class, UserProfileEntity::class],
-    version = 2,
+    entities = [WatchItemEntity::class, DownloadEntity::class, UserProfileEntity::class, AnimeCacheEntity::class],
+    version = 3,
     exportSchema = false
 )
 abstract class CineStreamDatabase : RoomDatabase() {
@@ -15,6 +15,7 @@ abstract class CineStreamDatabase : RoomDatabase() {
     abstract fun watchItemDao(): WatchItemDao
     abstract fun downloadDao(): DownloadDao
     abstract fun userProfileDao(): UserProfileDao
+    abstract fun animeCacheDao(): AnimeCacheDao
 
     companion object {
         @Volatile

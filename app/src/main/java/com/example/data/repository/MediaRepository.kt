@@ -27,6 +27,7 @@ class MediaRepository(
     private val watchItemDao: WatchItemDao,
     val firebaseRepository: FirebaseRepository = FirebaseRepository(),
     val elitePlexRepository: ElitePlexRepository = ElitePlexRepository(),
+    val animeProviderRepository: AnimeProviderRepository,
     val prefs: AppPrefs? = null
 ) {
 

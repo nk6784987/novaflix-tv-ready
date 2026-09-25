@@ -69,7 +69,7 @@ fun ServerSelectionDialog(
                         .connectTimeout(10, TimeUnit.SECONDS)
                         .readTimeout(10, TimeUnit.SECONDS)
                         .build()
-                    val targetUrl = "${url.trim().removeSuffix("/")}/mb/home"
+                    val targetUrl = url.trim().removeSuffix("/")
                     val reqBuilder = Request.Builder().url(targetUrl)
                     if (key.isNotBlank()) {
                         reqBuilder.header("X-API-Key", key.trim())
@@ -196,8 +196,9 @@ fun ServerSelectionDialog(
                 )
 
                 Spacer(Modifier.height(12.dp))
+                Spacer(Modifier.height(12.dp))
 
-                // Option 3: Custom Server
+                // Option 4: Custom Server
                 ServerOptionCard(
                     title = "Custom Server",
                     badge = "Advanced",
